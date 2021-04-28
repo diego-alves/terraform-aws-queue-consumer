@@ -122,7 +122,7 @@ resource "aws_iam_role" "task_execution_role" {
 # ------------------------------------------------------------------------------
 
 resource "aws_ecr_repository" "ecr" {
-  name                 = "consumer"
+  name                 = "devxp/tesseract/${lower(var.name)}"
   image_tag_mutability = "IMMUTABLE"
 
   image_scanning_configuration {

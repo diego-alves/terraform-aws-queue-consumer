@@ -1,12 +1,12 @@
 resource "aws_sqs_queue" "this" {
-  name       = join("", [var.name, (var.is_fifo ? ".fifo" : "")])
+  name       = join("", [replace(var.path,"/","-"), var.name, (var.is_fifo ? ".fifo" : "")])
   fifo_queue = var.is_fifo
 }
 
 resource "aws_iam_policy" "receiver" {
-  name        = "${var.name}QueueReceivePolicy"
+  name        = "${var.name}ReceivePolicy"
   description = "Receive and Delete Message for queue ${aws_sqs_queue.this.name}"
-  path        = "/devxp/tesseract/"
+  path        = "/${var.path}"
 
   policy = jsonencode({
     "Version" : "2012-10-17",
@@ -25,9 +25,9 @@ resource "aws_iam_policy" "receiver" {
 }
 
 resource "aws_iam_policy" "sender" {
-  name        = "${var.name}QueueSendPolicy"
-  description = "Consumer policy"
-  path        = "/devxp/tesseract/"
+  name        = "${var.name}SendPolicy"
+  description = "Sends Mesage for queue ${aws_sqs_queue.this.name}"
+  path        = "/${var.path}"
 
   policy = jsonencode({
     "Version" : "2012-10-17",

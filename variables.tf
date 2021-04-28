@@ -7,3 +7,9 @@ variable "name" {
   description = "Project name"
   type        = string
 }
+
+variable "path" {
+  description = "Path where the resources will be created"
+  type        = string
+  default     = ""
+}

@@ -1,6 +1,7 @@
 package test
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
@@ -16,12 +17,10 @@ func TestRootExample(t *testing.T) {
 		EnvVars: map[string]string{
 			"AWS_DEFAULT_REGION": expectedRegion,
 		},
-
 		Vars: map[string]interface{}{
 			"name": "QueueConsumerTest",
-			// TODO add all required variables here
+			"path": "devxp/tesseract/",
 		},
-
 		NoColor: false,
 	})
 
@@ -31,6 +30,6 @@ func TestRootExample(t *testing.T) {
 
 	queue := terraform.OutputMap(t, terraformOptions, "queue")
 
-	assert.Equal(t, "https://sqs.us-west-2.amazonaws.com/760373735544/QueueConsumerTest.fifo", queue["url"])
+	assert.Equal(t, "devxp-tesseract-QueueConsumerTest.fifo", strings.Split(queue["url"], "/")[4])
 
 }

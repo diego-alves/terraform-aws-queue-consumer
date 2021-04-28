@@ -4,7 +4,7 @@
 # -----------------------------------------------------------------------------
 variable "name" {
   description = "Queue name"
-  type = string
+  type        = string
 }
 
 # -----------------------------------------------------------------------------
@@ -15,6 +15,12 @@ variable "name" {
 
 variable "is_fifo" {
   description = "Queue is First In First Out"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
+}
+
+variable "path" {
+  description = "Path where the resources will be created"
+  type        = string
+  default     = ""
 }
