@@ -25,12 +25,11 @@ func TestRootExample(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	terraform.WorkspaceSelectOrNew(t, terraformOptions, "default")
 	terraform.InitAndApply(t, terraformOptions)
 
-	output := terraform.Output(t, terraformOptions, "output")
-	outputMap := terraform.OutputMap(t, terraformOptions, "output_map")
+	url := terraform.Output(t, terraformOptions, "url")
 
-	assert.Equal(t, expectedRegion, output)
-	assert.Regexp(t, "^\\d{12}$", outputMap)
+	assert.Equal(t, "https://sqs.us-west-2.amazonaws.com/760373735544/testqueue.fifo", url)
 
 }

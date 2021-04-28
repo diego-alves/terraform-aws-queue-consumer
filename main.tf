@@ -1,8 +1,6 @@
-resource "aws_instance" "app_server" {
-  ami           = "ami-830c94e3"
-  instance_type = "t2.micro"
+module "queue" {
+  source = "./modules/sqs"
 
-  tags = {
-    Name = "ExampleAppServerInstance"
-  }
+  name = "testqueue"
+  is_fifo = true
 }

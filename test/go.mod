@@ -1,4 +1,4 @@
-module github.com/diego-alves/cokiecutter-terraform-aws-module
+module github.com/diego-alves/terraform-aws-queue-consumer/test
 
 go 1.16
 
