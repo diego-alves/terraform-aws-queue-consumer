@@ -18,18 +18,19 @@ func TestRootExample(t *testing.T) {
 		},
 
 		Vars: map[string]interface{}{
+			"name": "QueueConsumerTest",
 			// TODO add all required variables here
 		},
 
-		NoColor: true,
+		NoColor: false,
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
 	terraform.WorkspaceSelectOrNew(t, terraformOptions, "default")
 	terraform.InitAndApply(t, terraformOptions)
 
-	url := terraform.Output(t, terraformOptions, "url")
+	queue := terraform.OutputMap(t, terraformOptions, "queue")
 
-	assert.Equal(t, "https://sqs.us-west-2.amazonaws.com/760373735544/testqueue.fifo", url)
+	assert.Equal(t, "https://sqs.us-west-2.amazonaws.com/760373735544/QueueConsumerTest.fifo", queue["url"])
 
 }

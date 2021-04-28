@@ -1,19 +1,14 @@
-output "url" {
-  value       = module.queue.url
-  description = "The SQS Queue Url"
-}
-
-output "arn" {
-  value       = module.queue.arn
-  description = "The SQS Queue Arn"
+output "queue" {
+  value       = module.sqs.queue
+  description = "The SQS Queue"
 }
 
 output "receiver_policy" {
-  value       = module.queue.receiver_policy
+  value       = module.sqs.receiver_policy
   description = "Receiver Policy Arn"
 }
 
 output "sender_policy" {
-  value       = module.queue.sender_policy
+  value       = module.sqs.sender_policy
   description = "Sender Policy Arn"
 }

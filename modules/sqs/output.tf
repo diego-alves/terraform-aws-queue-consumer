@@ -1,11 +1,9 @@
-output "url" {
-  value       = aws_sqs_queue.this.id
-  description = "The queue public url"
-}
-
-output "arn" {
-  value       = aws_sqs_queue.this.arn
-  description = "The queue arn"
+output queue {
+  value = {
+    url = aws_sqs_queue.this.id
+    arn = aws_sqs_queue.this.arn
+  }
+  description = "The queue with url and arn"
 }
 
 output "receiver_policy" {
