@@ -27,7 +27,7 @@ resource "aws_iam_policy" "receiver" {
 resource "aws_iam_policy" "sender" {
   name        = "${var.name}QueueSendPolicy"
   description = "Consumer policy"
-  path        = "/devxp/tesseract"
+  path        = "/devxp/tesseract/"
 
   policy = jsonencode({
     "Version" : "2012-10-17",
