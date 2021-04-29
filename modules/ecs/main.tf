@@ -4,7 +4,7 @@
 
 resource "aws_ecs_service" "service" {
   name            = var.name
-  cluster         = "ecs-devxp"
+  cluster         = var.cluster
   task_definition = aws_ecs_task_definition.task.arn
 
   network_configuration {

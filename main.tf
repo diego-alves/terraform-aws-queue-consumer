@@ -24,6 +24,7 @@ module "ecs" {
   source = "./modules/ecs"
 
   name      = var.name
+  cluster   = var.cluster
   queue     = module.sqs.queue
   image_tag = var.app_version
   vpc_id    = module.data.vpc_id
@@ -33,4 +34,16 @@ module "ecs" {
     QUEUE_URL  = module.sqs.queue.url
     BOTO_PROXY = "http://pagseguro.proxy.srv.intranet:80"
   }
+}
+
+# ------------------------------------------------------------------------------
+# AUTO SCALING
+# ------------------------------------------------------------------------------
+module "asg" {
+  source = "./modules/autoscaling"
+
+  service = var.name
+  cluster = var.cluster
+  queue   = module.sqs.queue.name
+
 }

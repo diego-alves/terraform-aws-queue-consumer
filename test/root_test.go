@@ -19,6 +19,7 @@ func TestRootExample(t *testing.T) {
 		},
 		Vars: map[string]interface{}{
 			"name":        "QueueConsumerTest",
+			"cluster":     "ecs-devxp",
 			"path":        "devxp/tesseract/",
 			"app_version": "0.0.9",
 		},

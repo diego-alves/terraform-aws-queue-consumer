@@ -8,6 +8,11 @@ variable "name" {
   type        = string
 }
 
+variable "cluster" {
+  description = "ECS cluster name"
+  type        = string
+}
+
 variable "app_version" {
   description = "Consumer Version"
   type        = string

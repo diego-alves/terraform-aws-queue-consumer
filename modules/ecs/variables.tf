@@ -8,6 +8,12 @@ variable "name" {
   type        = string
 }
 
+variable "cluster" {
+  description = "ECS Cluste Name"
+  type        = string
+
+}
+
 variable "vpc_id" {
   description = "VPC id for the subnets"
   type        = string
