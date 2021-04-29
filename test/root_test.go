@@ -20,7 +20,7 @@ func TestRootExample(t *testing.T) {
 		Vars: map[string]interface{}{
 			"name":        "QueueConsumerTest",
 			"path":        "devxp/tesseract/",
-			"app_version": "0.0.6",
+			"app_version": "0.0.9",
 		},
 		NoColor: false,
 	})
@@ -31,6 +31,6 @@ func TestRootExample(t *testing.T) {
 
 	queue := terraform.OutputMap(t, terraformOptions, "queue")
 
-	assert.Equal(t, "devxp-tesseract-QueueConsumerTest.fifo", strings.Split(queue["url"], "/")[4])
+	assert.Equal(t, "devxp-tesseract-QueueConsumerTest", strings.Split(queue["url"], "/")[4])
 
 }
