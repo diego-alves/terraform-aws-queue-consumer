@@ -5,6 +5,10 @@ terraform {
       version = "~> 3.37"
     }
   }
-
   required_version = ">= 0.15.1"
+}
+
+
+provider "aws" {
+  # Configuration options
 }

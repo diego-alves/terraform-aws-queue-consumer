@@ -1,3 +1,14 @@
+# ------------------------------------------------------------------------------
+# DATA
+# ------------------------------------------------------------------------------
+module "data" {
+  source  = "diego-alves/data/aws"
+  version = "0.0.5"
+}
+
+# ------------------------------------------------------------------------------
+# SQS
+# ------------------------------------------------------------------------------
 module "sqs" {
   source = "./modules/sqs"
 
@@ -6,15 +17,20 @@ module "sqs" {
   is_fifo = false
 }
 
-module "task" {
-  source = "./modules/task"
+# ------------------------------------------------------------------------------
+# ECS
+# ------------------------------------------------------------------------------
+module "ecs" {
+  source = "./modules/ecs"
 
-  name  = var.name
-  queue = module.sqs.queue
+  name      = var.name
+  queue     = module.sqs.queue
   image_tag = var.app_version
+  vpc_id    = module.data.vpc_id
+  subnets   = module.data.subnet_ids.app
 
   environment = {
-    QUEUE_URL = module.sqs.queue.url
+    QUEUE_URL  = module.sqs.queue.url
     BOTO_PROXY = "http://pagseguro.proxy.srv.intranet:80"
   }
 }

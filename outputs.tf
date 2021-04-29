@@ -14,6 +14,6 @@ output "sender_policy" {
 }
 
 output "image_url" {
-  value = module.task.image_url
+  value = module.ecs.image_url
   description = "Repository Image URL"
 }
