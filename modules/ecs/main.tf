@@ -6,6 +6,7 @@ resource "aws_ecs_service" "service" {
   name            = var.name
   cluster         = var.cluster
   task_definition = aws_ecs_task_definition.task.arn
+  launch_type     = "FARGATE"
 
   network_configuration {
     subnets          = var.subnets
