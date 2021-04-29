@@ -1,4 +1,20 @@
 # ------------------------------------------------------------------------------
+# SERVICE
+# ------------------------------------------------------------------------------
+
+resource "aws_ecs_service" "service" {
+  name            = var.name
+  cluster         = "ecs-devxp"
+  task_definition = aws_ecs_task_definition.task.arn
+
+  network_configuration {
+    subnets          = var.subnets
+    security_groups  = [aws_security_group.allow_queue.id]
+    assign_public_ip = false
+  }
+}
+
+# ------------------------------------------------------------------------------
 # TASK DEFINITION
 # ------------------------------------------------------------------------------
 
@@ -115,6 +131,26 @@ resource "aws_iam_role" "task_execution_role" {
       })
     }
   }
+}
+
+# ------------------------------------------------------------------------------
+# SECURITY GROUP
+# ------------------------------------------------------------------------------
+
+resource "aws_security_group" "allow_queue" {
+  name        = "${var.name}-sg"
+  description = "Allow access to the queue"
+  vpc_id      = var.vpc_id
+
+  egress {
+    description      = "Allow all Egress"
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
 }
 
 # ------------------------------------------------------------------------------

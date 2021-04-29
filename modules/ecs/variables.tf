@@ -8,6 +8,16 @@ variable "name" {
   type        = string
 }
 
+variable "vpc_id" {
+  description = "VPC id for the subnets"
+  type        = string
+}
+
+variable "subnets" {
+  description = "List of Subnet Ids"
+  type        = list(string)
+}
+
 variable "queue" {
   description = "The queue URL to consume"
   type = object({
