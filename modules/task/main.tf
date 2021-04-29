@@ -57,7 +57,7 @@ resource "aws_iam_role" "task_role" {
       ]
   })
   inline_policy {
-
+    name = "ReceiveDeleteMessage"
     policy = jsonencode({
       "Version" : "2012-10-17",
       "Statement" : [

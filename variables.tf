@@ -8,6 +8,12 @@ variable "name" {
   type        = string
 }
 
+variable "app_version" {
+  description = "Consumer Version"
+  type        = string
+  default     = "latest"
+}
+
 variable "path" {
   description = "Path where the resources will be created"
   type        = string

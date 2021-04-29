@@ -18,13 +18,14 @@ func TestRootExample(t *testing.T) {
 			"AWS_DEFAULT_REGION": expectedRegion,
 		},
 		Vars: map[string]interface{}{
-			"name": "QueueConsumerTest",
-			"path": "devxp/tesseract/",
+			"name":        "QueueConsumerTest",
+			"path":        "devxp/tesseract/",
+			"app_version": "0.0.6",
 		},
 		NoColor: false,
 	})
 
-	defer terraform.Destroy(t, terraformOptions)
+	// defer terraform.Destroy(t, terraformOptions)
 	terraform.WorkspaceSelectOrNew(t, terraformOptions, "default")
 	terraform.InitAndApply(t, terraformOptions)
 
