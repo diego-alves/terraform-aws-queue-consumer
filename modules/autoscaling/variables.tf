@@ -5,10 +5,15 @@ variable "cluster" {
 
 variable "service" {
   description = "ECS Service Name"
-  type = string
+  type        = string
 }
 
 variable "queue" {
   description = "The Queue name"
-  type = string
+  type        = string
+}
+
+variable "path" {
+  description = "Prefix name"
+  type        = string
 }

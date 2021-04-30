@@ -43,6 +43,7 @@ module "asg" {
   source = "./modules/autoscaling"
 
   service = var.name
+  path    = var.path
   cluster = var.cluster
   queue   = module.sqs.queue.name
 

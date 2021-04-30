@@ -8,7 +8,7 @@ resource "aws_appautoscaling_target" "ecs_target" {
 }
 
 resource "aws_appautoscaling_policy" "scaling_policy" {
-  name               = "scaling_policy"
+  name               = join("", [var.path, var.service])
   policy_type        = "StepScaling"
   resource_id        = aws_appautoscaling_target.ecs_target.resource_id
   scalable_dimension = aws_appautoscaling_target.ecs_target.scalable_dimension
@@ -29,13 +29,11 @@ resource "aws_appautoscaling_policy" "scaling_policy" {
       scaling_adjustment          = -1
     }
 
-
-
   }
 }
 
 resource "aws_cloudwatch_metric_alarm" "bat" {
-  alarm_name = "queue-number-of-messages"
+  alarm_name = join("", [var.path, var.service])
 
   // select the queue metric
   namespace   = "AWS/SQS"
