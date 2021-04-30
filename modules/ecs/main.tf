@@ -143,7 +143,7 @@ resource "aws_iam_role" "task_execution_role" {
 # ------------------------------------------------------------------------------
 
 resource "aws_security_group" "allow_queue" {
-  name        = "${var.name}-sg"
+  name        = join("", [replace(var.path, "/", "-"), var.name])
   description = "Allow access to the queue"
   vpc_id      = var.vpc_id
 
@@ -163,7 +163,7 @@ resource "aws_security_group" "allow_queue" {
 # ------------------------------------------------------------------------------
 
 resource "aws_ecr_repository" "ecr" {
-  name                 = "devxp/tesseract/${lower(var.name)}"
+  name                 = join("", [var.path, var.name])
   image_tag_mutability = "IMMUTABLE"
 
   image_scanning_configuration {
@@ -198,7 +198,7 @@ resource "aws_ecr_lifecycle_policy" "policy" {
 # ------------------------------------------------------------------------------
 
 resource "aws_cloudwatch_log_group" "cw_lg" {
-  name = "/devxp/tesseract/${var.name}"
+  name = join("", ["/", var.path, var.name])
 }
 
 # ------------------------------------------------------------------------------

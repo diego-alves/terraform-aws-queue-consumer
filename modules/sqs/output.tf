@@ -7,12 +7,7 @@ output "queue" {
   description = "The queue with url and arn"
 }
 
-output "receiver_policy" {
-  value       = aws_iam_policy.receiver.arn
-  description = "The IAM policy Receiver Arn, to attach on Consumer's Role"
-}
-
-output "sender_policy" {
+output "send_policy" {
   value       = aws_iam_policy.sender.arn
-  description = "The IAM policy Sender Arn, to attach on Producer's Role"
+  description = "The IAM policy Send Arn, to attach on Producer's Role"
 }

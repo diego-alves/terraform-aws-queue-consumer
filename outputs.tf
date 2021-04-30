@@ -3,13 +3,9 @@ output "queue" {
   description = "The SQS Queue"
 }
 
-output "receiver_policy" {
-  value       = module.sqs.receiver_policy
-  description = "Receiver Policy Arn"
-}
 
-output "sender_policy" {
-  value       = module.sqs.sender_policy
+output "send_policy" {
+  value       = module.sqs.send_policy
   description = "Sender Policy Arn"
 }
 

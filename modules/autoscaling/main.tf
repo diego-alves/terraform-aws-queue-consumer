@@ -33,7 +33,7 @@ resource "aws_appautoscaling_policy" "scaling_policy" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "bat" {
-  alarm_name = join("", [var.path, var.service])
+  alarm_name = join("", [replace(var.path, "/", "-"), var.service])
 
   // select the queue metric
   namespace   = "AWS/SQS"
