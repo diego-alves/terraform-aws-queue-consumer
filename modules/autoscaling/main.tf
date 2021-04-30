@@ -1,6 +1,6 @@
 resource "aws_appautoscaling_target" "ecs_target" {
-  max_capacity       = 1
-  min_capacity       = 0
+  max_capacity       = var.max
+  min_capacity       = var.min
   resource_id        = "service/${var.cluster}/${var.service}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
@@ -16,16 +16,16 @@ resource "aws_appautoscaling_policy" "scaling_policy" {
 
   step_scaling_policy_configuration {
     adjustment_type         = "ChangeInCapacity"
-    cooldown                = 30
+    cooldown                = var.cooldown
     metric_aggregation_type = "Average"
 
-    step_adjustment { //add 1 task if >= 1 
-      metric_interval_lower_bound = 1.0
+    step_adjustment { //add 1 task if metric >= threshold
+      metric_interval_lower_bound = var.threshold
       scaling_adjustment          = 1
     }
 
-    step_adjustment { //remove 1 task if < 1
-      metric_interval_upper_bound = 1.0
+    step_adjustment { //remove 1 task if metric < threshold
+      metric_interval_upper_bound = var.threshold
       scaling_adjustment          = -1
     }
 
@@ -42,12 +42,16 @@ resource "aws_cloudwatch_metric_alarm" "bat" {
     QueueName = var.queue
   }
 
-  // comparison threshold avg(1 * 60s) >= 1
-  comparison_operator = "GreaterThanThreshold"
+  // metric is the average of 1 evalution on each 60 seconds
   evaluation_periods  = 1
   period              = 60
   statistic           = "Average"
-  threshold           = 0
+
+  // threshold has to be -1 because the operator is not equal or
+  // This way the step bound can be set corretly.
+  // Ex: if threshold = 1 then metric > 0 sends the alert
+  comparison_operator = "GreaterThanThreshold"
+  threshold           = var.threshold - 1 
 
   // sets the alarm action
   alarm_description = "Check Number of Mesages in the Queue"
