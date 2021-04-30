@@ -13,11 +13,6 @@ variable "cluster" {
   type        = string
 }
 
-variable "path" {
-  description = "Service path location"
-  type        = string
-}
-
 variable "vpc_id" {
   description = "VPC id for the subnets"
   type        = string
@@ -76,4 +71,10 @@ variable "secrets" {
   description = "Secrets from Systems Manager Parameter Storage"
   type        = map(string)
   default     = {}
+}
+
+variable "path" {
+  description = "Service path location"
+  type        = string
+  default     = ""
 }

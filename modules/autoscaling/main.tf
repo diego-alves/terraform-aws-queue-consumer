@@ -1,4 +1,4 @@
-resource "aws_appautoscaling_target" "ecs_target" {
+resource "aws_appautoscaling_target" "target" {
   max_capacity       = var.max
   min_capacity       = var.min
   resource_id        = "service/${var.cluster}/${var.service}"
@@ -7,12 +7,12 @@ resource "aws_appautoscaling_target" "ecs_target" {
   # role_arn           = "arn:aws:iam::760373735544:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService"
 }
 
-resource "aws_appautoscaling_policy" "scaling_policy" {
+resource "aws_appautoscaling_policy" "policy" {
   name               = join("", [var.path, var.service])
   policy_type        = "StepScaling"
-  resource_id        = aws_appautoscaling_target.ecs_target.resource_id
-  scalable_dimension = aws_appautoscaling_target.ecs_target.scalable_dimension
-  service_namespace  = aws_appautoscaling_target.ecs_target.service_namespace
+  resource_id        = aws_appautoscaling_target.target.resource_id
+  scalable_dimension = aws_appautoscaling_target.target.scalable_dimension
+  service_namespace  = aws_appautoscaling_target.target.service_namespace
 
   step_scaling_policy_configuration {
     adjustment_type         = "ChangeInCapacity"
@@ -32,7 +32,7 @@ resource "aws_appautoscaling_policy" "scaling_policy" {
   }
 }
 
-resource "aws_cloudwatch_metric_alarm" "bat" {
+resource "aws_cloudwatch_metric_alarm" "alarm" {
   alarm_name = join("", [replace(var.path, "/", "-"), var.service])
 
   // select the queue metric
@@ -56,9 +56,9 @@ resource "aws_cloudwatch_metric_alarm" "bat" {
   // sets the alarm action
   alarm_description = "Check Number of Mesages in the Queue"
   alarm_actions = [
-    aws_appautoscaling_policy.scaling_policy.arn
+    aws_appautoscaling_policy.policy.arn
   ]
   ok_actions = [
-    aws_appautoscaling_policy.scaling_policy.arn
+    aws_appautoscaling_policy.policy.arn
   ]
 }
