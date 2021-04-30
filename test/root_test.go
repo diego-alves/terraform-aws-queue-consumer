@@ -18,7 +18,7 @@ func TestRootExample(t *testing.T) {
 			"AWS_DEFAULT_REGION": expectedRegion,
 		},
 		Vars: map[string]interface{}{
-			"name":        "QueueConsumerTest",
+			"name":        "cookiecutter-consumer",
 			"cluster":     "ecs-devxp",
 			"path":        "devxp/tesseract/",
 			"app_version": "0.0.9",
@@ -32,6 +32,6 @@ func TestRootExample(t *testing.T) {
 
 	queue := terraform.OutputMap(t, terraformOptions, "queue")
 
-	assert.Equal(t, "devxp-tesseract-QueueConsumerTest", strings.Split(queue["url"], "/")[4])
+	assert.Equal(t, "devxp-tesseract-cookiecutter-consumer", strings.Split(queue["url"], "/")[4])
 
 }

@@ -25,6 +25,7 @@ module "ecs" {
 
   name      = var.name
   cluster   = var.cluster
+  path      = var.path
   queue     = module.sqs.queue
   image_tag = var.app_version
   vpc_id    = module.data.vpc_id

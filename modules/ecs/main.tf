@@ -3,7 +3,7 @@
 # ------------------------------------------------------------------------------
 
 resource "aws_ecs_service" "service" {
-  name            = var.name
+  name            = join("", [replace(var.path, "/", "-"), var.name])
   cluster         = var.cluster
   task_definition = aws_ecs_task_definition.task.arn
   launch_type     = "FARGATE"
@@ -20,7 +20,7 @@ resource "aws_ecs_service" "service" {
 # ------------------------------------------------------------------------------
 
 resource "aws_ecs_task_definition" "task" {
-  family = var.name
+  family = join("", [replace(var.path, "/", "-"), var.name])
   cpu    = var.cpu
   memory = var.mem
 
@@ -58,7 +58,9 @@ resource "aws_ecs_task_definition" "task" {
 # ------------------------------------------------------------------------------
 
 resource "aws_iam_role" "task_role" {
-  name = "${var.name}TaskRole"
+  name = "${replace(title(var.name), "-", "")}TaskRole"
+
+  path = "/${var.path}"
   assume_role_policy = jsonencode(
     {
       Version : "2012-10-17",
@@ -98,7 +100,9 @@ resource "aws_iam_role" "task_role" {
 # ------------------------------------------------------------------------------
 
 resource "aws_iam_role" "task_execution_role" {
-  name = "${var.name}TaskExecutionRole"
+  name = "${replace(title(var.name), "-", "")}TaskExecutionRole"
+
+  path = "/${var.path}"
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
   ]

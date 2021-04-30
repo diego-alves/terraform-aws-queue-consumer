@@ -11,7 +11,11 @@ variable "name" {
 variable "cluster" {
   description = "ECS Cluste Name"
   type        = string
+}
 
+variable "path" {
+  description = "Service path location"
+  type        = string
 }
 
 variable "vpc_id" {
