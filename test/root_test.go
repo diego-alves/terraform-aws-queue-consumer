@@ -26,7 +26,7 @@ func TestRootExample(t *testing.T) {
 		NoColor: false,
 	})
 
-	// defer terraform.Destroy(t, terraformOptions)
+	defer terraform.Destroy(t, terraformOptions)
 	terraform.WorkspaceSelectOrNew(t, terraformOptions, "default")
 	terraform.InitAndApply(t, terraformOptions)
 
